@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Selenium2Demo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">selenium-2-demo</a> &gt; <a href="index.source.html" class="el_package">org.acradibotc.selenium.demo</a> &gt; <span class="el_source">Selenium2Demo.java</span></div><h1>Selenium2Demo.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
+ */
+package org.acradibotc.selenium.demo;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+/**
+ *
+ * @author Anhnt206
+ */
+<span class="nc" id="L17">public class Selenium2Demo {</span>
+
+    private static WebDriver myBrowser; //biến con trỏ trỏ vào trình duyệt
+
+    public static void main(String[] args) throws InterruptedException {
+<span class="nc" id="L22">        System.out.println(&quot;Please wait 3s to lauch the browser...&quot;);</span>
+<span class="nc" id="L23">        Thread.sleep(3000);</span>
+<span class="nc" id="L24">        introduction();</span>
+<span class="nc" id="L25">    }</span>
+
+    public static void introduction() throws InterruptedException {
+<span class="nc" id="L28">        System.setProperty(&quot;webdriver.chrome.driver&quot;, &quot;chromedriver.exe&quot;);</span>
+<span class="nc" id="L29">        ChromeOptions opt = new ChromeOptions();</span>
+<span class="nc" id="L30">        opt.addArguments(&quot;--remote-allow-origins=*&quot;);</span>
+<span class="nc" id="L31">        opt.addArguments(&quot;--lang=en-GB&quot;);</span>
+<span class="nc" id="L32">        opt.addArguments(&quot;--incognito&quot;);</span>
+
+<span class="nc" id="L34">        String username = &quot;linh@test&quot;;</span>
+<span class="nc" id="L35">        String password = &quot;020601&quot;;</span>
+
+<span class="nc" id="L37">        myBrowser = new ChromeDriver(opt);</span>
+<span class="nc" id="L38">        myBrowser.manage().window().maximize();</span>
+
+<span class="nc" id="L40">        myBrowser.get(&quot;https://unicat.azurewebsites.net/Welcome.jsp&quot;);</span>
+<span class="nc" id="L41">        Thread.sleep(10000);</span>
+        
+<span class="nc" id="L43">        myBrowser.findElement(By.cssSelector(&quot;a[href='/user/login']&quot;)).click();</span>
+
+        //Login with user's account
+<span class="nc" id="L46">        WebElement txtUserName = myBrowser.findElement(By.xpath(&quot;//input[@id='email']&quot;));</span>
+<span class="nc" id="L47">        txtUserName.sendKeys(username);</span>
+<span class="nc" id="L48">        WebElement txtPassword = myBrowser.findElement(By.xpath(&quot;//input[@id='password']&quot;));</span>
+<span class="nc" id="L49">        txtPassword.sendKeys(password);</span>
+<span class="nc" id="L50">        WebElement btnLogin = myBrowser.findElement(By.xpath(&quot;//input[@id='login']&quot;));</span>
+<span class="nc" id="L51">        btnLogin.click();</span>
+        
+
+        //Click on “Course”
+<span class="nc" id="L55">        WebElement btnCourse = myBrowser.findElement(By.xpath(&quot;//ul[@class='main_nav']//a[normalize-space()='Courses']&quot;));</span>
+<span class="nc" id="L56">        btnCourse.click();</span>
+
+        //Select course from the list of course
+<span class="nc" id="L59">        WebElement btnCourseName = myBrowser.findElement(By.cssSelector(&quot;a[href='/course?CourseID=2']&quot;));</span>
+<span class="nc" id="L60">        btnCourseName.click();</span>
+
+
+        //Click on &quot;Go to Course&quot; to access the course materials
+<span class="nc" id="L64">        WebElement btnGoToCourse = myBrowser.findElement(By.xpath(&quot;//button[@name='courseId']&quot;));</span>
+<span class="nc" id="L65">        btnGoToCourse.click();</span>
+
+        //Verify that the user is redirected to the course page and can access the course materials.
+<span class="nc" id="L68">        myBrowser.findElement(By.cssSelector(&quot;.col-md-9&quot;)).click();</span>
+<span class="nc" id="L69">        Thread.sleep(10000);</span>
+
+        //Log out
+<span class="nc" id="L72">        WebElement btnLogOut = myBrowser.findElement(By.xpath(&quot;//a[normalize-space()='Log Out']&quot;));</span>
+<span class="nc" id="L73">        btnLogOut.click();</span>
+
+        //wait to close browser
+<span class="nc" id="L76">        Thread.sleep(5000);</span>
+<span class="nc" id="L77">        myBrowser.quit();</span>
+<span class="nc" id="L78">    }</span>
+
+    public static void playWithGoogleSearch() throws InterruptedException {
+<span class="nc" id="L81">        System.setProperty(&quot;webdriver.chrome.driver&quot;, &quot;chromedriver.exe&quot;);</span>
+<span class="nc" id="L82">        ChromeOptions opt = new ChromeOptions();</span>
+<span class="nc" id="L83">        opt.addArguments(&quot;--remote-allow-origins=*&quot;);</span>
+<span class="nc" id="L84">        opt.addArguments(&quot;--lang=en-GB&quot;);</span>
+<span class="nc" id="L85">        opt.addArguments(&quot;--incognito&quot;);</span>
+
+<span class="nc" id="L87">        myBrowser = new ChromeDriver(opt);</span>
+<span class="nc" id="L88">        myBrowser.manage().window().maximize();</span>
+
+<span class="nc" id="L90">        myBrowser.get(&quot;https://google.com&quot;);</span>
+        //định vị, đi tìm cái ô search, để nhập keyword CA SĨ MẶT NẠ
+        //myBrowser hiện nắm giữ toàn bộ các tag của trang web
+        //Google.com đã đc tải về máy mình
+        //Các trình duyệt khi đc phát triê người ta đã tính sẵn
+        //gọi là các kĩ thuật định vị thẻ - nôm na: câu query để
+        //select ra đc 1 cái tag
+        // có các loại query sau trong 1 trình duyệt bất kì:
+        // query theo id, name, css selector, xPath
+        // xPath siêu cool, luôn tìm ra dc 1 tag bất kì trong đống
+        // tag lồng nhau của &lt;html&gt;&lt;body&gt;&lt;div&gt;&lt;div&gt;
+
+        //myBrowser sẽ nắm giữ các tag của trang web đc tải về
+        //nó cũng hỗ trợ các câu query để tìm tag
+        //nó cũng hỗ trợ việc can thiệp vào hoạt động của từng tag
+        //click trên tag, input data vào tag...
+        //Mỗi tag được xem là 1 object thuộc class webelement
+//        WebElement searchBox = myBrowser.findElement(By.name(&quot;q&quot;));
+<span class="nc" id="L108">        WebElement searchBox = myBrowser.findElement(By.xpath(&quot;//input[@title='Search']&quot;));</span>
+
+<span class="nc" id="L110">        searchBox.sendKeys(&quot;CA SĨ MẶT NẠ&quot;);</span>
+<span class="nc" id="L111">        searchBox.submit();</span>
+
+<span class="nc" id="L113">        Thread.sleep(5000);</span>
+<span class="nc" id="L114">        myBrowser.quit();</span>
+<span class="nc" id="L115">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
